@@ -173,15 +173,19 @@ $(".card .list-group").sortable({
   tolerance: "pointer",
   helper: "clone",
   activate: function(event) {
+    this.dropover
     console.log("activate", this);
   },
   deactivate: function(event) {
+    this.dropover.remove();
     console.log("deactivate", this);
   },
   over: function(event) {
+    event.target.dropover-active
     console.log("over", event.target);
   },
   out: function(event) {
+    event.target.dropover-active.remove();
     console.log("out", event.target);
   },
   update: function(event) {
@@ -252,7 +256,7 @@ $("#task-form-modal").on("shown.bs.modal", function() {
 });
 
 // save button in modal was clicked
-$("#task-form-modal .btn-primary").click(function() {
+$("#task-form-modal .btn-save").click(function() {
   // get form values
   var taskText = $("#modalTaskDescription").val();
   var taskDate = $("#modalDueDate").val();
@@ -285,4 +289,8 @@ $("#remove-tasks").on("click", function() {
 // load tasks for the first time
 loadTasks();
 
-
+setInterval(function () {
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+}, 5000);
